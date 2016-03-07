@@ -1,3 +1,6 @@
-from python:2.7.10-onbuild
+from python:2.7.11-onbuild
 
-RUN pip install Pylab
+RUN apt-get update  \
+    && apt-get -y install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
+
+RUN pip install pylab
