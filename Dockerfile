@@ -1,11 +1,14 @@
-from python:2.7.11-onbuild
+from continuumio/miniconda:latest
 
-RUN apt-get update
-RUN apt-get -y install python-numpy
-RUN apt-get -y install python-scipy
-RUN apt-get -y install python-matplotlib
-RUN apt-get -y install ipython
-RUN apt-get -y install ipython-notebook
-RUN apt-get -y install python-pandas
-RUN apt-get -y install python-sympy
-RUN apt-get -y install python-nose
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+RUN conda install --yes numpy
+
+RUN conda install --yes Matplotlib
+
+ONBUILD COPY requirements.txt /usr/src/app/
+
+ONBUILD RUN pip install --no-cache-dir -r requirements.txt
+
+ONBUILD COPY . /usr/src/app
